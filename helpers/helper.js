@@ -3,8 +3,8 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const {db} = require('../config.json')
 const uri = db.mongoConnectionString;
 
-
 class MongoConnection {
+
     constructor() {
       if (!MongoConnection.instance) {
         this.client = null;
@@ -22,8 +22,7 @@ class MongoConnection {
                 }
                 });
     
-             this.client = await client.connect(); 
-             await this.client.db(dbName).command({ ping: 1 });
+             this.client = await this.client.connect(); 
             }
         catch(err) {console.log(err)}
     }
@@ -32,15 +31,16 @@ class MongoConnection {
         return this.client;
       }
 
-    getCollection() {
-        let collection = this.client.db("test").collection("inventory");
-        collection.find({}).toArray((error, documents) => {
+    getUserCollection() {
+        let collection = this.client.db("test").collection("nadezhdas");
+        /*collection.find({}).toArray((error, documents) => {
             if (error) {
               console.error("Error retrieving documents:", error);
             } else {
               console.log("Retrieved documents:", documents);
             }
           });
+          */
         return collection
     }
     }

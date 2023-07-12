@@ -1,0 +1,9 @@
+{
+    "editor.fontFamily": "Consolas, 'Courier New', monospace",
+    "editor.tabSize": 10,
+    "editor.renderWhitespace": "selection",
+    "editor.fontSize": 15,
+    "editor.accessibilityPageSize": 30,
+    "editor.fontWeight": "normal",
+    "editor.showFoldingControls": "always"
+}

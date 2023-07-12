@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path")
-const {AuthRoutes} = require("./routers/authRouter");
-const {connectMongo , getClient} = require("./helpers/helper")
+const {authRoutes} = require("./routers/authRouter");
+const {userRouter} = require("./routers/userRouter");
+
 const {MongoConnection} = require("./helpers/helper")
 
 
@@ -28,22 +29,26 @@ app.use("/",(req,res,next)=>{
     }
   }
 )
-app.use("/api/",AuthRoutes)
+app.use("/api/",authRoutes)
+app.use("/db/",userRouter)
 
 
 
 MongoConnection.connect();
-let client = MongoConnection.getClient();
-let collection = client.db("test").collection("inventory");
-collection.find({}).toArray((error, documents) => {
-    if (error) {
-      console.error("Error retrieving documents:", error);
-    } else {
-      console.log("Retrieved documents:", documents);
-    }
-  });
-console.log("data - " + collection);
+//let client = MongoConnection.getClient();
+let collection = MongoConnection.getUserCollection();
 
+
+  app.use("/db", (req, res, next) => {
+    collection.find({}).toArray()
+      .then((documents) => {
+        res.json(documents);
+      })
+      .catch((error) => {
+        console.error("Error retrieving documents:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      });
+  });
 
 app.listen(3000, () => console.log("Server running at port 3000"));
 

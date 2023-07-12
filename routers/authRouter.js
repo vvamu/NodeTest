@@ -1,4 +1,5 @@
 const {Router} = require("express")
+const {userController} = require('../controllers/userContorller')
 
 var router = Router();
 
@@ -26,5 +27,5 @@ router.route("/login")
     .all((req,res,next)=>res.error(errors.methodNotAllowed) )
 
 module.exports = {
-    AuthRoutes : router
+    authRoutes : router
 }
